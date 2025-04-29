@@ -1,0 +1,27 @@
+:root {
+  --background-screen: var(--grey-00);
+  --background-section: var(--grey-50);
+  --background-overlay: rgba(var(--grey-900-rgb), 0.6);
+  --background-sidebar: var(--grey-blue-700);
+  --background-white-section: var(--grey-00);
+
+  --background-action-default: var(--grey-600);
+  --background-action-soft-default: var(--grey-400);
+  --background-action-active: var(--green-500);
+  --background-action-hover: var(--green-800);
+  --background-action-soft-hover: var(--green-100);
+  --background-action-selected: var(--green-800);
+  --background-action-soft-selected: var(--success-100);
+  --background-action-focus: var(--green-400);
+  --background-action-disabled: var(--grey-100);
+  --background-action-white: var(--grey-00);
+
+  --background-status-soft-informative: var(--info-100);
+  --background-status-informative: var(--info-600);
+  --background-status-soft-positive: var(--success-100);
+  --background-status-positive: var(--success-600);
+  --background-status-soft-warning: var(--warning-100);
+  --background-status-warning: var(--warning-600);
+  --background-status-soft-negative: var(--error-100);
+  --background-status-negative: var(--error-600);
+}

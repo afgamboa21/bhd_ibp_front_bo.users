@@ -1,0 +1,158 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+@plugin "tailwindcss-primeui";
+@import './theme/fundations/fundations.css';
+@import './theme/tailwind-custom.css';
+@import './theme/input.css';
+
+@font-face {
+  font-family: 'Trust Sans Alt';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    url('../public/fonts/trust_sans/trust-sans-alt-regular.ttf')
+      format('truetype'),
+    url('../public/fonts/trust_sans/trust-sans-alt-regular.woff') format('woff'),
+    url('../public/fonts/trust_sans/trust-sans-alt-regular.woff2')
+      format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Trust Sans Alt';
+  font-style: normal;
+  font-weight: 600;
+  src:
+    url('../public/fonts/trust_sans/trust-sans-alt-medium.ttf')
+      format('truetype'),
+    url('../public/fonts/trust_sans/trust-sans-alt-medium.woff') format('woff'),
+    url('../public/fonts/trust_sans/trust-sans-alt-medium.woff2')
+      format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Trust Sans Alt';
+  font-style: normal;
+  font-weight: 700;
+  src:
+    url('../public/fonts/trust_sans/trust-sans-alt-bold.ttf') format('truetype'),
+    url('../public/fonts/trust_sans/trust-sans-alt-bold.woff') format('woff'),
+    url('../public/fonts/trust_sans/trust-sans-alt-bold.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    url('../public/fonts/noto_sans/noto-sans-regular.ttf') format('truetype'),
+    url('../public/fonts/noto_sans/noto-sans-regular.woff') format('woff'),
+    url('../public/fonts/noto_sans/noto-sans-regular.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 600;
+  src:
+    url('../public/fonts/noto_sans/noto-sans-medium.ttf') format('truetype'),
+    url('../public/fonts/noto_sans/noto-sans-medium.woff') format('woff'),
+    url('../public/fonts/noto_sans/noto-sans-medium.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 800;
+  src:
+    url('../public/fonts/noto_sans/noto-sans-bold.ttf') format('truetype'),
+    url('../public/fonts/noto_sans/noto-sans-bold.woff') format('woff'),
+    url('../public/fonts/noto_sans/noto-sans-bold.woff2') format('woff2');
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Trust Sans Alt', sans-serif;
+  font-weight: 600;
+}
+
+h1.hero-l {
+  font-size: clamp(2.25rem, 0.0625rem + 7vw, 4rem);
+}
+
+h2.hero-m {
+  font-size: clamp(2rem, 1.375rem + 2vw, 2.5rem);
+}
+
+h3.hero-s {
+  font-size: clamp(1.25rem, 1.162rem + 0.3756vw, 1.5rem);
+}
+
+h1,
+h1.title {
+  font-size: clamp(1.5rem, 1.0599rem + 1.8779vw, 2.75rem);
+}
+
+h2,
+h2.subtitle {
+  font-size: clamp(1.125rem, 1.081rem + 0.1878vw, 1.25rem);
+}
+
+p,
+span,
+label,
+input,
+textarea,
+select {
+  font-family: 'Noto Sans', sans-serif;
+  color: var(--text-copy-body);
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}

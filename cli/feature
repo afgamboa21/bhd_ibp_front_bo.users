@@ -1,0 +1,135 @@
+#!/bin/bash
+
+# Check if feature name is provided
+if [ -z "$1" ]; then
+  echo "Error: Feature name is required."
+  echo "Usage: $0 <feature-name>"
+  exit 1
+fi
+
+FEATURE_NAME=$1
+BASE_PATH="src/app/features/$FEATURE_NAME"
+
+# Function to convert kebab-case to PascalCase (portable version)
+to_pascal_case() {
+  local input="$1"
+  local result=""
+  local capitalize_next=1 # Flag to capitalize the next character
+  for (( i=0; i<${#input}; i++ )); do
+    local char="${input:i:1}"
+    if [[ "$char" == "-" ]]; then
+      capitalize_next=1
+    elif [[ $capitalize_next -eq 1 ]]; then
+      result+="$(echo "$char" | tr '[:lower:]' '[:upper:]')"
+      capitalize_next=0
+    else
+      result+="$char"
+    fi
+  done
+  echo "$result"
+}
+
+FEATURE_NAME_PASCAL=$(to_pascal_case "$FEATURE_NAME")
+# Generate PascalCase name for the use-case service as well
+USE_CASE_SERVICE_NAME_PASCAL=$(to_pascal_case "${FEATURE_NAME}-use-case")
+# Generate PascalCase name for the api service
+API_SERVICE_NAME_PASCAL=$(to_pascal_case "${FEATURE_NAME}-api")
+
+echo "Creating feature structure for '$FEATURE_NAME' at '$BASE_PATH'..."
+
+# Create directories
+mkdir -p "$BASE_PATH/application" # Ensure application directory exists first
+mkdir -p "$BASE_PATH/infrastructure/dtos"
+mkdir -p "$BASE_PATH/infrastructure/mappers"
+mkdir -p "$BASE_PATH/models"
+mkdir -p "$BASE_PATH/state"
+mkdir -p "$BASE_PATH/ui/components"
+mkdir -p "$BASE_PATH/ui/pages"
+
+# Create files
+nx generate @schematics/angular:service "${FEATURE_NAME}-api" --path="$BASE_PATH/infrastructure"
+
+# Remove providedIn: 'root' from the generated API service
+API_SERVICE_FILE="$BASE_PATH/infrastructure/${FEATURE_NAME}-api.service.ts"
+# Replace @Injectable({...}) or @Injectable({}) with @Injectable()
+
+cat <<EOL > "$API_SERVICE_FILE"
+import { Injectable } from '@angular/core';
+import { HttpService } from '@bhd/data-access';
+import { ${FEATURE_NAME_PASCAL}Repository } from '../models/${FEATURE_NAME}.repository';
+
+@Injectable()
+export class ${API_SERVICE_NAME_PASCAL}Service extends ${FEATURE_NAME_PASCAL}Repository {
+  constructor(private httpSvc: HttpService) {
+    super();
+  }
+
+  // Add API service methods here
+}
+EOL
+
+# Generate Use Case service
+USE_CASE_SERVICE_PATH="$BASE_PATH/application"
+nx generate @schematics/angular:service "${FEATURE_NAME}-use-case" --path="$USE_CASE_SERVICE_PATH"
+
+# Modify the generated Use Case service to inject the Repository
+USE_CASE_SERVICE_FILE="$USE_CASE_SERVICE_PATH/${FEATURE_NAME}-use-case.service.ts"
+REPOSITORY_CLASS_NAME="${FEATURE_NAME_PASCAL}Repository"
+REPOSITORY_IMPORT_PATH="../models/${FEATURE_NAME}.repository"
+
+cat <<EOL > "$USE_CASE_SERVICE_FILE"
+import { Injectable } from '@angular/core';
+import { ${REPOSITORY_CLASS_NAME} } from '${REPOSITORY_IMPORT_PATH}';
+
+@Injectable()
+export class ${USE_CASE_SERVICE_NAME_PASCAL}Service {
+
+  constructor(private readonly repository: ${REPOSITORY_CLASS_NAME}) { }
+
+  // Add use case methods here
+}
+EOL
+
+touch "$BASE_PATH/ui/${FEATURE_NAME}.routes.ts"
+touch "$BASE_PATH/index.ts"
+
+# Create repository file with abstract class
+REPOSITORY_FILE="$BASE_PATH/models/${FEATURE_NAME}.repository.ts"
+REPOSITORY_CLASS_NAME="${FEATURE_NAME_PASCAL}Repository"
+cat <<EOL > "$REPOSITORY_FILE"
+export abstract class ${REPOSITORY_CLASS_NAME} {
+  // Define abstract methods for the ${FEATURE_NAME} repository contract
+}
+EOL
+
+# Add provider configuration to index.ts
+INDEX_FILE="$BASE_PATH/index.ts"
+API_SERVICE_CLASS_NAME="${API_SERVICE_NAME_PASCAL}Service"
+USE_CASE_SERVICE_CLASS_NAME="${USE_CASE_SERVICE_NAME_PASCAL}Service"
+
+cat <<EOL >> "$INDEX_FILE"
+
+import { ${REPOSITORY_CLASS_NAME} } from './models/${FEATURE_NAME}.repository';
+import { ${API_SERVICE_CLASS_NAME} } from './infrastructure/${FEATURE_NAME}-api.service';
+import { ${USE_CASE_SERVICE_CLASS_NAME} } from './application/${FEATURE_NAME}-use-case.service';
+
+const providerRepository = () => ({
+  provide: ${REPOSITORY_CLASS_NAME},
+  useClass: ${API_SERVICE_CLASS_NAME},
+});
+
+export const provide${FEATURE_NAME_PASCAL} = () => [providerRepository(), ${USE_CASE_SERVICE_CLASS_NAME}];
+
+EOL
+
+# Make the script executable
+chmod +x cli/feature
+
+echo "Feature structure for '$FEATURE_NAME' created successfully at $BASE_PATH"
+echo "Repository file created at $REPOSITORY_FILE with abstract class ${FEATURE_NAME_PASCAL}Repository"
+
+# Format the generated files
+echo "Formatting generated files in $BASE_PATH..."
+npx prettier --write "$BASE_PATH" --log-level warn
+
+exit 0 

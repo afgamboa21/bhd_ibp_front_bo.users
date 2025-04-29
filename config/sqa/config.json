@@ -1,0 +1,10 @@
+{
+  "environment": {
+    "production": false,
+    "apiUrl": "https://api-dev.bhdleon.com.do",
+    "channel": "IBP",
+    "platform": "IBP",
+    "userImgPath": "/config/info.svg",
+    "appVersion": "dev-v4.0"
+  }
+}

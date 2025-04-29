@@ -1,0 +1,10 @@
+{
+  "environment": {
+    "production": false,
+    "apiUrl": "https://api-sqa.bhdleon.com.do",
+    "channel": "IBP",
+    "platform": "IBP",
+    "userImgPath": "/config/info.svg",
+    "appVersion": "local-v4.0"
+  }
+}

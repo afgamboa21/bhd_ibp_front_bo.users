@@ -1,0 +1,50 @@
+:root {
+  --grey-00: #ffffff;
+  --grey-50: #f5f5f5;
+  --grey-100: #eeeeee;
+  --grey-200: #e2e2e2;
+  --grey-300: #cbcbcb;
+  --grey-400: #afafaf;
+  --grey-500: #757575;
+  --grey-600: #545454;
+  --grey-700: #333333;
+  --grey-800: #1f1f1f;
+  --grey-900: #050505;
+  --grey-900-rgb: 22, 26, 29;
+
+  --grey-blue-50: #f1f3f4;
+  --grey-blue-100: #e2e6e9;
+  --grey-blue-200: #c5ced3;
+  --grey-blue-300: #a8b5bd;
+  --grey-blue-400: #8b9da7;
+  --grey-blue-500: #6e8491;
+  --grey-blue-600: #586a74;
+  --grey-blue-700: #424f57;
+  --grey-blue-800: #2c353a;
+  --grey-blue-900: #161a1d;
+
+  --green-100: #e7f2e3;
+  --green-200: #c4e9c0;
+  --green-300: #99e59b;
+  --green-400: #509940;
+  --green-500: #11b719;
+  --green-600: #00a80c;
+  --green-700: #008500;
+  --green-800: #006500;
+
+  --info-100: #f0f5ff;
+  --info-600: #005bfa;
+  --info-800: #001430;
+
+  --success-100: #f7fbf4;
+  --success-600: #6ea437;
+  --success-800: #172e00;
+
+  --warning-100: #fffaf0;
+  --warning-600: #faaf00;
+  --warning-800: #412d00;
+
+  --error-100: #fff2f0;
+  --error-600: #db2500;
+  --error-800: #440600;
+}

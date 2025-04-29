@@ -1,0 +1,17 @@
+:root {
+  --stroke-action-box-and-line: var(--grey-200);
+  --stroke-action-default: var(--grey-600);
+  --stroke-action-active: var(--green-500);
+  --stroke-action-hover: var(--green-700);
+  --stroke-action-selected: var(--green-800);
+  --stroke-action-focus: var(--green-500);
+  --stroke-action-disabled: var(--grey-400);
+  --stroke-action-white: var(--grey-00);
+  --stroke-action-visited: var(--green-800);
+  --stroke-action-visited-hover: var(--grey-500);
+
+  --stroke-status-informative: var(--info-600);
+  --stroke-status-positive: var(--success-600);
+  --stroke-status-warning: var(--warning-600);
+  --stroke-status-negative: var(--error-600);
+}

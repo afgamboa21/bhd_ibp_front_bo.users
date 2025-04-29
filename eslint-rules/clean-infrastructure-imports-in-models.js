@@ -1,0 +1,63 @@
+/**
+ * @fileoverview No imports from infrastructure in domain layer
+ */
+module.exports = {
+  meta: {
+    type: 'problem',
+    docs: {
+      description:
+        'Importing infrastructure modules from domain is not allowed.',
+      category: 'Best Practices',
+      recommended: false,
+    },
+    schema: [],
+    messages: {
+      noInfraImport:
+        'Importing infrastructure modules from domain is not allowed.',
+    },
+  },
+  create(context) {
+    const filename = context.getFilename();
+    const isApplication =
+      filename.includes('/models/') || filename.includes('\\models\\');
+
+    return {
+      ImportDeclaration(node) {
+        if (!isApplication) return;
+
+        const importPath = node.source.value;
+        if (
+          importPath.includes('/infrastructure/') ||
+          importPath.includes('\\infrastructure\\') ||
+          importPath.startsWith('infrastructure/')
+        ) {
+          context.report({
+            node,
+            messageId: 'noInfraImport',
+          });
+        }
+      },
+      CallExpression(node) {
+        if (!isApplication) return;
+        if (
+          node.callee.name === 'require' &&
+          node.arguments.length &&
+          node.arguments[0].type === 'Literal'
+        ) {
+          const importPath = node.arguments[0].value;
+          if (
+            typeof importPath === 'string' &&
+            (importPath.includes('/infrastructure/') ||
+              importPath.includes('\\infrastructure\\') ||
+              importPath.startsWith('infrastructure/'))
+          ) {
+            context.report({
+              node,
+              messageId: 'noInfraImport',
+            });
+          }
+        }
+      },
+    };
+  },
+};

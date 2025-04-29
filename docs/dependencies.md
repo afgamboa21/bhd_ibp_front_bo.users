@@ -1,0 +1,8 @@
+"@bhd/cli": "19.4.1",
+"@bhd/config": "19.5.0",
+"@bhd/confirmation-number": "19.3.1",
+"@bhd/data-access": "19.5.0",
+"@bhd/device-web": "19.3.1",
+"@bhd/feature-flags": "19.3.1",
+"@bhd/storage-web": "19.4.2",
+"@bhd/test-id-kit": "10.0.1",

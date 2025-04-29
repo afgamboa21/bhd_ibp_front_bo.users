@@ -1,0 +1,22 @@
+:root {
+  --text-copy-title: var(--grey-700);
+  --text-copy-subtitle: var(--grey-700);
+  --text-copy-body: var(--grey-700);
+  --text-copy-disclaimer: var(--grey-500);
+  --text-copy-informative: var(--info-600);
+  --text-copy-success: var(--success-600);
+  --text-copy-warning: var(--warning-600);
+  --text-copy-negative: var(--error-600);
+  --text-copy-white: var(--grey-00);
+
+  --text-action-default: var(--grey-700);
+  --text-action-active: var(--green-500);
+  --text-action-hover: var(--green-800);
+  --text-action-selected: var(--green-800);
+  --text-action-focus: var(--green-500);
+  --text-action-disabled: var(--grey-500);
+  --text-action-white: var(--grey-00);
+  --text-action-visited: var(--green-800);
+  --text-action-visited-hover: var(--green-500);
+  --text-action-ghost: var(--grey-400);
+}
