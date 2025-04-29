@@ -10,8 +10,12 @@ import { loginDtoUserMapper } from '@/app/features/auth/infrastructure/mappers/l
 import { AuthRepository } from '@/app/features/auth/models/auth.repository';
 import { SchemaValidator } from '@/app/core/services/infrastructure/schema-validator';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthApiService extends AuthRepository {
+  private isLoggedIn = true; // TODO conectar con bk
+
   constructor(private httpSvc: HttpService) {
     super();
   }
@@ -25,5 +29,18 @@ export class AuthApiService extends AuthRepository {
     const dto = await this.httpSvc.post<LoginResponseDto>(params);
     SchemaValidator.validate(LoginResponseDtoSchema, dto);
     return loginDtoUserMapper(dto);
+  }
+  // Hardcode logeado
+  loginHardCode(): void {
+    this.isLoggedIn = true;
+  }
+
+  logout(): void {
+    this.isLoggedIn = false;
+  }
+
+  // Verificar si el usuario está logueado
+  isAuthenticated(): boolean {
+    return this.isLoggedIn;
   }
 }
