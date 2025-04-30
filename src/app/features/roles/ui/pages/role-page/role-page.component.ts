@@ -9,13 +9,14 @@ import {
 import { RolesApiService } from '../../../infrastructure/roles-api.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { Role } from '../../../models/roles.model';
+import { Role } from '../../../models/role/roles.model';
 import { AuthApiService } from '@/app/features/auth/infrastructure/auth-api.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { RoleComponent } from '../../components/role/form-role/FormRole.component';
 
 @Component({
   selector: 'app-role-page',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RoleComponent],
   templateUrl: './role-page.component.html',
 })
 export class RolePageComponent {

@@ -1,9 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'tailwindcss';
-@plugin "tailwindcss-primeui";
+/* @import 'tailwindcss';
+@plugin "tailwindcss-primeui"; */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import './theme/fundations/fundations.css';
 @import './theme/tailwind-custom.css';
 @import './theme/input.css';
+
+
+/* Estilo global para checkboxes marcados */
+input[type="checkbox"]:checked {
+  accent-color: #16a34a; /* verde-600 */
+}
+
 
 @font-face {
   font-family: 'Trust Sans Alt';
@@ -155,4 +167,18 @@ h4,
 h5,
 h6 {
   text-wrap: balance;
+}
+
+::-webkit-scrollbar {
+  width: 6px;         /* grosor vertical */
+  height: 6px;        /* grosor horizontal */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* color del "pulgar" */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* fondo de la pista */
 }

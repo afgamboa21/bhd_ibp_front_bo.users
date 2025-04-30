@@ -1,9 +1,10 @@
-import { RolesRepository } from './models/roles.repository';
-import { RolesApiService } from './infrastructure/roles-api.service';
+import { PermissionUseCaseService } from './application/permission-use-case.service';
+import { PermissionRepository } from './models/permission/permission.repository';
+import { PermissionService } from './infrastructure/permission-api.service';
 
 const providerRepository = () => ({
-  provide: RolesRepository,
-  useClass: RolesApiService,
+  provide: PermissionRepository,
+  useClass: PermissionService,
 });
 
-export const provideRoles = () => [providerRepository()];
+export const providePermissions = () => [providerRepository(), PermissionUseCaseService];

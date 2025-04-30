@@ -1,19 +1,19 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpService } from '@bhd/data-access';
-import { RolesRepository } from '../models/roles.repository';
+import { RolesRepository } from '../models/role/roles.repository';
 import { catchError, Observable, of } from 'rxjs';
-import { PaginatedResponse, Role } from '../models/roles.model';
+import { PaginatedResponse, Role } from '../models/role/roles.model';
 import { HttpClient } from '@angular/common/http';
+import { IRole } from '../interfaces/role/Role.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RolesApiService extends RolesRepository {
-  constructor(private httpSvc: HttpService) {
-    super();
+export class RolesApiService {
+  constructor(private http: HttpClient) {
+    // super();
   }
-
-  private http = inject(HttpClient);
+  private readonly baseUrl = 'http://localhost:3000/roles';
 
   // Add API service methods here
   // TODO implementar servicio desde el bk
@@ -163,4 +163,24 @@ export class RolesApiService extends RolesRepository {
       `https://jsonplaceholder.typicode.com/users?name_like=${query}`,
     );
   }
+
+  // createRole(role: IRole) {
+  //   localStorage.setItem('newRole', JSON.stringify(role));
+  //   return this.http.post<IRole>(`${this.baseUrl}/create`, role);
+  // }
+
+  // updateRole(role: IRole) {
+  //   return this.http.put<IRole>(`${this.baseUrl}/update/${role.id}`, role);
+  // }
+
+  // getRoleById(id: number): Observable<IRole> {
+  //   // return this.http.get<IRole>(`${this.baseUrl}/${id}`);
+  //   const mockData: IRole = {
+  //     id: 1,
+  //     name: 'Administrador',
+  //     description: 'Acceso total',
+  //     permissions: [1, 2, 3, 10, 8],
+  //   };
+  //   return of(mockData);
+  // }
 }
