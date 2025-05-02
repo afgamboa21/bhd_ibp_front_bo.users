@@ -1,11 +1,5 @@
 import { IPermission } from "../permission/permission.model";
 
-export interface Role {
-  id: number;
-  code: string;
-  name: string;
-  description: string;
-}
 
 export interface IRole {
   id: number;

@@ -14,9 +14,10 @@ import {
   IPermission,
   IPermissionChild,
 } from '@/app/features/roles/models/permission/permission.model';
-import { providePermissions } from '@/app/features/roles';
+import { providePermissions, provideRoles } from '@/app/features/roles';
 import { Permission } from '@/app/features/roles/infrastructure/permission';
 import { DinamyToggleOrCheckBoxComponent } from '@/app/shared/components/forms/temporary/toggle-input/dinamyToggleOrCheckBox/dinamyToggleOrCheckBox.component';
+import { RoleUseCaseService } from '@/app/features/roles/application/role-use-case.service';
 
 @Component({
   selector: 'app-form-role-component',
@@ -26,7 +27,7 @@ import { DinamyToggleOrCheckBoxComponent } from '@/app/shared/components/forms/t
     InputLabelComponent,
     DinamyToggleOrCheckBoxComponent,
   ],
-  providers: [providePermissions()],
+  providers: [providePermissions(), provideRoles()],
   templateUrl: './FormRole.component.html',
 })
 export class RoleComponent implements OnInit {
@@ -34,6 +35,7 @@ export class RoleComponent implements OnInit {
 
   private readonly FormRoleBuilder = inject(FormBuilder);
   private readonly permissionService = inject(PermissionUseCaseService);
+  private readonly roleService = inject(RoleUseCaseService);
   action = input.required<string>();
   isEditMode = signal(false);
   hasError = signal(false);
@@ -67,7 +69,10 @@ export class RoleComponent implements OnInit {
   ngOnInit(): void {
     const permissionsArray = this.myRoleForm.get('permissions') as FormArray;
     this.permissionMethods = new Permission(permissionsArray);
+    this.handleAction(permissionsArray);
+  }
 
+  getAllPermissions(): void {
     this.permissionService.getAllPermissions().then((permissions) => {
       this.permissions.set(permissions);
       this.permissionsChild.set(
@@ -76,50 +81,47 @@ export class RoleComponent implements OnInit {
     });
   }
 
-  // handleAction(): void {
-  //   if (this.action() === 'create') {
-  //     this.permissionsByParent.set(this.permissionService.getPermissions());
-  //   } else if (this.action() === 'edit' && this.roleId()) {
-  //     this.isEditMode.set(true);
-  //     this.isLoading.set(true);
-  //     this.roleService.getRoleById(this.roleId()!).subscribe({
-  //       next: (role) => {
-  //         this.myRoleForm.patchValue({
-  //           name: role.name,
-  //           description: role.description,
-  //         });
+  handleAction(permissionsArray: FormArray): void {
+    if (this.action() === 'create') {
+      this.getAllPermissions();
+    } else if (this.action() === 'edit' && this.roleId()) {
+      this.getAllPermissions();
+      // this.permissionsChild.set([]);
+      this.roleService.getRoleById(this.roleId()!).then((role) => {
+        if (!role) throw new Error('Role not found');
 
-  //         role.permissions.forEach((permissionId) => {
-  //           this.permissionsArray.push(
-  //             this.FormRoleBuilder.control(permissionId),
-  //           );
-  //         });
+        this.myRoleForm.patchValue({
+          name: role.name,
+          description: role.description,
+        });
 
-  //         this.permissionsByParent.set(this.permissionService.getPermissions());
-  //         this.isLoading.set(false);
-  //       },
-  //       error: () => {
-  //         this.hasError.set(true);
-  //         this.isLoading.set(false);
-  //       },
-  //     });
-  //   }
-  // }
+        const validPermissionIds = this.permissions()
+          .flatMap((p) => p.moduleResponse)
+          .map((child) => child.id);
 
-  // onSave() {
-  //   if (this.myRoleForm.valid) {
-  //     console.log(this.myRoleForm.value);
-  //     this.roleService.createRole(this.myRoleForm.value).subscribe({
-  //       next: (newRole) => {
-  //         localStorage.setItem('newRole', JSON.stringify(newRole));
-  //       },
-  //       error: () => {
-  //         this.hasError.set(true);
-  //         this.isLoading.set(false);
-  //       },
-  //     });
-  //   } else {
-  //     console.warn('Formulario inválido');
-  //   }
-  // }
+          console.log(validPermissionIds);
+
+        role.permissions.forEach((permId) => {
+          permissionsArray.push(this.FormRoleBuilder.control(permId));
+        });
+      });
+    }
+  }
+
+  onSave() {
+    if (this.myRoleForm.valid) {
+      console.log(this.myRoleForm.value);
+      // this.roleService.createRole(this.myRoleForm.value).subscribe({
+      //   next: (newRole) => {
+      //     localStorage.setItem('newRole', JSON.stringify(newRole));
+      //   },
+      //   error: () => {
+      //     this.hasError.set(true);
+      //     this.isLoading.set(false);
+      //   },
+      // });
+    } else {
+      console.warn('Formulario inválido');
+    }
+  }
 }

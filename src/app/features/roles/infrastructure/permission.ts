@@ -12,7 +12,6 @@ export class Permission {
   }
 
   areAllPermissionsSelected(group: IPermission): boolean {
-    console.log("hola",group);
     return group.moduleResponse.every((perm) =>
       this.isPermissionSelected(perm),
     );

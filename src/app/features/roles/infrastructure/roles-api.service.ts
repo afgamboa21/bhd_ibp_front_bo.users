@@ -164,23 +164,23 @@ export class RolesApiService {
     );
   }
 
-  // createRole(role: IRole) {
-  //   localStorage.setItem('newRole', JSON.stringify(role));
-  //   return this.http.post<IRole>(`${this.baseUrl}/create`, role);
-  // }
+  createRole(role: IRole) {
+    localStorage.setItem('newRole', JSON.stringify(role));
+    return this.http.post<IRole>(`${this.baseUrl}/create`, role);
+  }
 
-  // updateRole(role: IRole) {
-  //   return this.http.put<IRole>(`${this.baseUrl}/update/${role.id}`, role);
-  // }
+  updateRole(role: IRole) {
+    return this.http.put<IRole>(`${this.baseUrl}/update/${role.id}`, role);
+  }
 
-  // getRoleById(id: number): Observable<IRole> {
-  //   // return this.http.get<IRole>(`${this.baseUrl}/${id}`);
-  //   const mockData: IRole = {
-  //     id: 1,
-  //     name: 'Administrador',
-  //     description: 'Acceso total',
-  //     permissions: [1, 2, 3, 10, 8],
-  //   };
-  //   return of(mockData);
-  // }
+  getRoleById(id: number): Promise<IRole> {
+    // return this.http.get<IRole>(`${this.baseUrl}/${id}`);
+    const mockData: IRole = {
+      id: 1,
+      name: 'Administrador',
+      description: 'Acceso total',
+      permissions: [1, 2],
+    };
+    return Promise.resolve(mockData);
+  }
 }

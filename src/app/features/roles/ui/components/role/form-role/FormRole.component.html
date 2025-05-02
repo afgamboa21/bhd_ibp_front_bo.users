@@ -2,7 +2,7 @@
   class="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-xl flex flex-col max-h-[90vh]">
   <!-- Contenedor con scroll -->
   <div class="p-6 space-y-6 overflow-y-auto">
-    <form [formGroup]="myRoleForm">
+    <form [formGroup]="myRoleForm" (ngSubmit)="onSave()">
       <h2 class="text-2xl mb-8 font-semibold text-gray-800 px-2">Nuevo rol</h2>
 
       <!-- Inputs -->
@@ -28,9 +28,10 @@
         class="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-auto grid-flow-dense items-start">
         @for (permission of permissions(); track permission.id) {
           <div class="border p-4 rounded-xl shadow bg-white">
-            <div class="bg-gray-100 flex justify-between items-center mb-2 p-2">
+            <div
+              class="bg-gray-100 flex justify-between items-center gap-4 mb-2 p-2">
               <h3 class="font-semibold text-lg">{{ permission.name }}</h3>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center">
                 <app-dinamy-toggle-or-check-box
                   type="toggle"
                   [label]="'Autorizar todo'"
