@@ -2,13 +2,33 @@ import { inject, Injectable } from '@angular/core';
 import { HttpService } from '@bhd/data-access';
 import { RolesRepository } from '../models/role/roles.repository';
 import { catchError, Observable, of } from 'rxjs';
-import { PaginatedResponse, Role } from '../models/role/roles.model';
+import { PaginatedResponse, IRole } from '../models/role/roles.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RolesApiService extends RolesRepository {
+  override async getAllRoles(): Promise<IRole[]> {
+    try {
+      const response = await this.http
+        .get<IRole[]>('https://jsonplaceholder.typicode.com/users')
+        .toPromise();
+      return response || [];
+    } catch (error) {
+      console.error('Error fetching roles:', error);
+      throw error;
+    }
+  }
+  override getRoleById(id: number): Promise<IRole> {
+    throw new Error('Method not implemented.');
+  }
+  override createRole(role: IRole): Promise<IRole> {
+    throw new Error('Method not implemented.');
+  }
+  override updateRole(id: number, role: IRole): Promise<IRole> {
+    throw new Error('Method not implemented.');
+  }
   constructor(private httpSvc: HttpService) {
     super();
   }
@@ -18,130 +38,110 @@ export class RolesApiService extends RolesRepository {
   // Add API service methods here
   // TODO implementar servicio desde el bk
   getRoles(page: number, size: number) {
-    const mockData: Role[] = [
+    const mockData: IRole[] = [
       {
-        id: 1,
-        code: '0812472',
+        id: 8125,
         name: 'Administrador',
         description: 'Acceso total',
       },
       {
-        id: 2,
-        code: '0812170',
+        id: 8125,
         name: 'Usuario',
         description: 'Acceso limitado',
       },
       {
-        id: 3,
-        code: '0812171',
+        id: 8125,
         name: 'Supervisor',
         description: 'Supervisión de usuarios',
       },
       {
-        id: 4,
-        code: '0812172',
+        id: 8125,
         name: 'Auditor',
         description: 'Acceso a auditorías',
       },
       {
-        id: 5,
-        code: '0812173',
+        id: 8125,
         name: 'Gerente',
         description: 'Gestión de operaciones',
       },
       {
-        id: 6,
-        code: '0812174',
+        id: 8125,
         name: 'Analista',
         description: 'Análisis de datos',
       },
       {
-        id: 7,
-        code: '0812175',
+        id: 8125,
         name: 'Soporte',
         description: 'Soporte técnico',
       },
       {
-        id: 8,
-        code: '0812176',
+        id: 8125,
         name: 'Consultor',
         description: 'Consultoría externa',
       },
       {
-        id: 9,
-        code: '0812177',
+        id: 8125,
         name: 'Desarrollador',
         description: 'Desarrollo de software',
       },
       {
-        id: 10,
-        code: '0812178',
+        id: 8125,
         name: 'Tester',
         description: 'Pruebas de calidad',
       },
       {
-        id: 11,
-        code: '0812179',
+        id: 8125,
         name: 'Operador',
         description: 'Operaciones diarias',
       },
       {
-        id: 12,
-        code: '0812180',
+        id: 8125,
         name: 'Especialista',
         description: 'Especialización técnica',
       },
       {
-        id: 13,
-        code: '0812181',
+        id: 8125,
         name: 'Coordinador',
         description: 'Coordinación de equipos',
       },
       {
-        id: 14,
-        code: '0812182',
+        id: 8125,
         name: 'Director',
         description: 'Dirección estratégica',
       },
       {
-        id: 15,
-        code: '0812183',
+        id: 8125,
         name: 'Asistente',
         description: 'Asistencia administrativa',
       },
       {
-        id: 16,
-        code: '0812184',
+        id: 8125,
         name: 'Capacitador',
         description: 'Capacitación de personal',
       },
       {
-        id: 17,
-        code: '0812185',
+        id: 8125,
         name: 'Investigador',
         description: 'Investigación y desarrollo',
       },
       {
-        id: 18,
-        code: '0812186',
+        id: 8125,
         name: 'Planificador',
         description: 'Planificación de proyectos',
       },
       {
-        id: 19,
-        code: '0812187',
+        id: 8125,
         name: 'Administrador de red',
         description: 'Gestión de redes',
       },
       {
-        id: 20,
-        code: '0812188',
+        id: 8125,
         name: 'Arquitecto',
         description: 'Diseño de sistemas',
       },
     ];
 
-    const paginated: PaginatedResponse<Role> = {
+    const paginated: PaginatedResponse<IRole> = {
       data: mockData.slice((page - 1) * size, page * size),
       total: mockData.length,
       page,

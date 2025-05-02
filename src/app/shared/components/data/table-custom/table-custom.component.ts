@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { IconComponent } from '@/app/shared/components/icons/icon.component';
 import { CommonModule } from '@angular/common';
+import { IRole } from '@/app/features/roles/models/role/roles.model';
 
 @Component({
   selector: 'app-table-custom',
@@ -8,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './table-custom.component.html',
 })
 export class TableCustomComponent {
-  @Input() roles: Array<{ id: number; code: string; name: string; description: string }> = [];
+  @Input() roles: Array<IRole> = [];
   @Input() currentPage: number = 1;
   @Input() pageSize: number = 10;
   @Input() totalRoles: number = 0;

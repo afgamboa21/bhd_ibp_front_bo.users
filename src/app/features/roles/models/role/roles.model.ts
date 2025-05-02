@@ -5,7 +5,7 @@ export interface IRole {
   id: number;
   name: string;
   description: string;
-  permissions: IPermission[];
+  permissions?: IPermission[];
 }
 
 export interface PaginatedResponse<T> {
