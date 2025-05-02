@@ -46,11 +46,8 @@
       <!-- container-roles -->
       <div
         class="mt-[-2.5rem] z-10 bg-[#f5f5f5ff] rounded-t-2xl h-full flex-1 flex-grow px-[10rem] py-5">
-        <div class="breadcrumbs text-sm mb-5">
-          <ul>
-            <li><a>Usuarios banca en linea</a></li>
-            <li class="font-semibold">Administración de roles</li>
-          </ul>
+        <div class="text-sm mb-5">
+          <app-breadcrumb [items]="itemsRolePage" />
         </div>
         <h1 class="text-lg font-semibold mb-5">
           Administración de roles Banca en Línea
@@ -58,50 +55,33 @@
         <!-- Filtro de búsqueda -->
         <div class="flex justify-between mb-5">
           <div class="flex-grow">
-            <p class="text-sm font-semibold mb-2">Buscar</p>
-            <div class="flex flex-row items-center space-x-2 gap-4">
-              <label
-                class="input w-100 flex items-center space-x-2 border p-2 rounded">
-                <svg
-                  class="h-[1em] opacity-50"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24">
-                  <g
-                    stroke-linejoin="round"
-                    stroke-linecap="round"
-                    stroke-width="2.5"
-                    fill="none"
-                    stroke="currentColor">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.3-4.3"></path>
-                  </g>
-                </svg>
-                <input
-                  type="search"
-                  [formControl]="searchControl"
-                  (keyup.enter)="onSearchEnter()"
-                  placeholder="Rol"
-                  class="outline-none" />
-              </label>
-              @if (searchControl.invalid && searchControl.touched) {
-                <div class="text-red-500 text-sm mt-1">
-                  El campo es obligatorio.
-                </div>
-              }
+            <div class="flex flex-row space-x-2 gap-4">
+              <app-input-text
+                [label]="'Buscar'"
+                [placeholder]="'Rol'"
+                [formControl]="searchControl"
+                (keyup.enter)="onSearchEnter()"
+                [fieldType]="'text'" />
               <a
                 href="javascript:void(0)"
-                class="text-[#11b819ff] underline font-semibold text-sm"
+                class="text-[#11b819ff] underline font-semibold text-sm mt-auto mb-5"
                 (click)="clearSearch()">
                 Limpiar búsqueda
               </a>
             </div>
           </div>
-
-          <button
-            class="btn bg-[#11b819ff] rounded-lg text-white mt-auto px-4 py-2 cursor-pointer"
-            (click)="openModal()">
-            Crear rol
-          </button>
+          <app-button
+            type="button"
+            label="Crear rol"
+            [size]="'medium'"
+            [ngClass]="'mt-auto'"
+            [block]="true">
+            <app-icon
+              icon-start
+              name="device-desktop"
+              size="17"
+              [strokeWidth]="2.5" />
+          </app-button>
         </div>
         <!-- Tabla -->
         @if (hasError()) {
@@ -131,92 +111,17 @@
               </h2>
             } @else {
               <div class="overflow-x-auto mt-6">
-                <table class="min-w-full text-left text-sm text-gray-700">
-                  <thead
-                    class="bg-[#e1e5e8ff] text-gray-800 rounded-lg overflow-hidden">
-                    <tr>
-                      <th class="px-4 py-3 w-1/12">
-                        <div class="flex items-center justify-between">
-                          Código
-                          <i class="fa-solid fa-chevron-down text-xs ml-1"></i>
-                        </div>
-                      </th>
-                      <th class="px-4 py-3 w-1/6">
-                        <div class="flex items-center justify-between">
-                          Nombre de rol
-                          <i class="fa-solid fa-chevron-down text-xs ml-1"></i>
-                        </div>
-                      </th>
-                      <th class="px-4 py-3 w-2/6">
-                        <div class="flex items-center justify-between">
-                          Descripción
-                          <i class="fa-solid fa-chevron-down text-xs ml-1"></i>
-                        </div>
-                      </th>
-                      <th class="px-4 py-3 w-1/12">
-                        <div class="flex items-center justify-between">
-                          Acciones
-                        </div>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @for (role of roles(); track role.id) {
-                      <tr
-                        class="odd:bg-white even:bg-[#f5f5f5ff] hover:bg-gray-50">
-                        <td class="px-4 py-3">{{ role.code }}</td>
-                        <td class="px-4 py-3">{{ role.name }}</td>
-                        <td class="px-4 py-3 max-w-xs truncate">
-                          {{ role.description }}
-                        </td>
-                        <td class="px-4 py-3">
-                          <div class="flex space-x-3">
-                            <button class="group relative">
-                              <i class="fa-regular fa-eye"></i>
-                              <span
-                                class="absolute -top-7 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition transform bg-gray-800 text-white text-xs px-2 py-1 rounded-md"
-                                >Ver detalles</span
-                              >
-                            </button>
-                            <button
-                              class="group relative"
-                              (click)="openModal()">
-                              <i class="fa-solid fa-pen"> </i>
-                              <span
-                                class="absolute -top-7 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition transform bg-gray-800 text-white text-xs px-2 py-1 rounded-md"
-                                >Editar</span
-                              >
-                            </button>
-                            <button class="group relative">
-                              <i class="fa-regular fa-trash-can"></i>
-                              <span
-                                class="absolute -top-7 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition transform bg-gray-800 text-white text-xs px-2 py-1 rounded-md"
-                                >Eliminar</span
-                              >
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    }
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Paginación con estilos DaisyUI -->
-              <div class="flex justify-center items-center mt-6 space-x-4">
-                <button
-                  class="btn btn-outline btn-primary"
-                  (click)="prevPage()"
-                  [disabled]="currentPage() === 1">
-                  Anterior
-                </button>
-                <span class="text-sm font-medium"> Página 1 </span>
-                <button
-                  class="btn btn-outline btn-primary"
-                  (click)="nextPage()"
-                  [disabled]="currentPage() * pageSize() >= totalRoles()">
-                  Siguiente
-                </button>
+                <app-table-custom
+                  [roles]="roles()"
+                  [currentPage]="currentPage()"
+                  [pageSize]="pageSize()"
+                  [totalRoles]="totalRoles()"
+                  (viewDetails)="onViewDetails($event)"
+                  (editRole)="onEditRole($event)"
+                  (deleteRole)="onDeleteRole($event)"
+                  (prevPage)="prevPage()"
+                  (nextPage)="nextPage()"
+                  (pageChange)="onPageChange($event)"></app-table-custom>
               </div>
             }
           }

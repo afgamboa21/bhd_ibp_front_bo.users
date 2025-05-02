@@ -1,0 +1,39 @@
+<div
+  class="flex flex-col justify-between items-center p-0 gap-[91px] absolute w-full left-0">
+  <!-- Content -->
+  <div class="max-w-[80%]">
+    <div class="flex items-start p-0 my-8 mx-auto h-[96px]">
+      <div class="flex flex-col w-[70%] gap-2">
+        <h1 class="text-[32px]">Esquemas de aprobación</h1>
+        <p class="text-[18px] leading-[24px]">
+          Define quién aprueba cada operación con esquemas personalizados;
+          mejora el control, la seguridad y la eficiencia de tus transacciones.
+        </p>
+      </div>
+      <div class="w-[30%] h-full flex justify-end items-center">
+        <div class="w-[70%]">
+          <app-button
+            type="button"
+            label="Nuevo esquema"
+            [size]="'medium'"
+            [block]="true">
+            <app-icon
+              icon-start
+              name="shield-plus"
+              size="17"
+              [strokeWidth]="2.5" />
+          </app-button>
+        </div>
+      </div>
+    </div>
+    <div class="flex">
+      <div class="bg-white p-6 rounded-2xl w-[70%]">
+        @if(schemes().length > 0){
+        <app-list [schemes]="schemes()"/>
+        } @else{
+        <app-empty-list/>
+        }
+      </div>
+    </div>
+  </div>
+</div>

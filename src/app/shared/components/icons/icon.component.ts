@@ -11,7 +11,12 @@ import {
   IconMinus,
   IconTrash,
   IconWritingSign,
-  IconChevronRight
+  IconChevronRight,
+  IconChevronLeft,
+  IconShieldPlus,
+  IconDeviceDesktop,
+  IconChevronDown,
+  IconEdit,
 } from 'angular-tabler-icons/icons';
 
 const icons = {
@@ -23,7 +28,12 @@ const icons = {
   IconMinus,
   IconTrash,
   IconWritingSign,
-  IconChevronRight
+  IconChevronRight,
+  IconChevronLeft,
+  IconShieldPlus,
+  IconDeviceDesktop,
+  IconChevronDown,
+  IconEdit,
 };
 
 type RemoveIconPrefix<S extends string> = S extends `Icon${infer Rest}`

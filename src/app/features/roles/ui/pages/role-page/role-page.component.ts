@@ -9,18 +9,28 @@ import {
 import { RolesApiService } from '../../../infrastructure/roles-api.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { Role } from '../../../models/roles.model';
+import { Role } from '../../../models/role/roles.model';
 import { AuthApiService } from '@/app/features/auth/infrastructure/auth-api.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { IconComponent } from '@/app/shared/components/icons/icon.component';
+import { ButtonComponent } from '@/app/shared/components/forms/button.component';
+import { InputTextComponent } from "@/app/shared/components/forms/input-text.component";
+import { BreadcrumbComponent } from '@/app/shared/components/utils/breadcrumb/breadcrumb.component';
+import { TableCustomComponent } from '@/app/shared/components/data/table-custom/table-custom.component';
 
 @Component({
   selector: 'app-role-page',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, IconComponent, ButtonComponent, InputTextComponent, InputTextComponent, BreadcrumbComponent, TableCustomComponent],
   templateUrl: './role-page.component.html',
 })
 export class RolePageComponent {
   private readonly authService = inject(AuthApiService);
   private readonly roleService = inject(RolesApiService);
+
+  itemsRolePage = [
+    { label: 'Usuarios banca en línea', routerLink: ['/users'] },
+    { label: 'Administración de roles' } // Último sin routerLink
+  ];
 
   query = signal('');
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -142,5 +152,66 @@ export class RolePageComponent {
   clearSearch() {
     this.searchControl.setValue('');
     this.searchResults.set([]);
+  }
+
+  /**
+   * * Método para obtener el número total de páginas
+   * @description Este método se encarga de obtener el número total
+   * de páginas a partir del número total de roles y el tamaño de página.
+   * @returns number
+   */
+  get totalPages(): number {
+    return Math.ceil(this.totalRoles() / this.pageSize());
+  }
+
+  /**
+   * * Método para obtener un array con el número de páginas
+   * @description Este método se encarga de obtener un array con el número
+   * total de páginas a partir del número total de roles y el tamaño de página.
+   * @returns number[]
+   */
+  get totalPagesArray(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  /**
+   * * * Método para cambiar de página
+   * @description Este método se encarga de cambiar de página y
+   * actualizar la lista de roles.
+   * @param event
+   * @returns void
+   */
+  onPageChange(event: Event): void {
+    const selectedPage = +(event.target as HTMLSelectElement).value;
+    this.currentPage.set(selectedPage);
+    console.log('Página seleccionada:', selectedPage);
+  }
+
+  /**
+   * * Método para ver detalles de un rol
+   * @description Este método se encarga de mostrar los detalles de un rol.
+   * @param roleId - ID del rol
+   */
+  onViewDetails(roleId: number): void {
+    console.log('View details for role:', roleId);
+  }
+
+  /**
+   * * Método para editar un rol
+   * @description Este método se encarga de editar un rol.
+   * @param roleId - ID del rol
+   */
+  onEditRole(roleId: number): void {
+    console.log('Edit role:', roleId);
+    this.openModal()
+  }
+
+  /**
+   * * Método para eliminar un rol
+   * @description Este método se encarga de eliminar un rol.
+   * @param roleId - ID del rol
+   */
+  onDeleteRole(roleId: number): void {
+    console.log('Delete role:', roleId);
   }
 }

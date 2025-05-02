@@ -15,7 +15,7 @@ export class ApprovalSchemesApiService extends ApprovalSchemesRepository {
   // }
 
   // Add API service methods here
-  private apiUrl = 'https://run.mocky.io/v3/8eb5cfdd-f71b-4e2e-b07e-e8b3d48e7f8c';
+  private apiUrl = 'http://localhost:3000/approvalSchemes';
 
   constructor(private http: HttpClient) {
     super();

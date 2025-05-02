@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpService } from '@bhd/data-access';
-import { RolesRepository } from '../models/roles.repository';
+import { RolesRepository } from '../models/role/roles.repository';
 import { catchError, Observable, of } from 'rxjs';
-import { PaginatedResponse, Role } from '../models/roles.model';
+import { PaginatedResponse, Role } from '../models/role/roles.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

@@ -1,0 +1,104 @@
+<table class="min-w-full text-left text-sm text-gray-700">
+  <thead class="bg-[#e1e5e8ff] text-gray-800 rounded-lg overflow-hidden">
+    <tr>
+      <th class="px-4 py-3 w-1/12">
+        <div class="flex items-center gap-2">
+          Código
+          <app-icon
+            icon-start
+            name="chevron-down"
+            size="17"
+            [strokeWidth]="2.5" />
+        </div>
+      </th>
+      <th class="px-4 py-3 w-1/6">
+        <div class="flex items-center gap-2">
+          Nombre de rol
+          <app-icon
+            icon-start
+            name="chevron-down"
+            size="17"
+            [strokeWidth]="2.5" />
+        </div>
+      </th>
+      <th class="px-4 py-3 w-2/6">
+        <div class="flex items-center gap-2">
+          Descripción
+          <app-icon
+            icon-start
+            name="chevron-down"
+            size="17"
+            [strokeWidth]="2.5" />
+        </div>
+      </th>
+      <th class="px-4 py-3 w-1/12">
+        <div class="flex items-center">Acciones</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let role of roles"
+      class="odd:bg-white even:bg-[#f5f5f5ff] hover:bg-gray-50">
+      <td class="px-4 py-3">{{ role.code }}</td>
+      <td class="px-4 py-3">{{ role.name }}</td>
+      <td class="px-4 py-3 max-w-xs truncate">{{ role.description }}</td>
+      <td class="px-4 py-3">
+        <div class="flex space-x-3">
+          <button (click)="onViewDetails(role.id)" class="flex items-center">
+            <app-icon icon-start name="eye" size="20" [strokeWidth]="2.5" />
+          </button>
+          <button (click)="onEditRole(role.id)" class="flex items-center">
+            <app-icon icon-start name="edit" size="20" [strokeWidth]="2.5" />
+          </button>
+          <button (click)="onDeleteRole(role.id)" class="flex items-center">
+            <app-icon icon-start name="trash" size="20" [strokeWidth]="2.5" />
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div
+  class="flex items-center justify-between gap-4 text-sm text-gray-700 mt-10">
+  <div class="flex items-center gap-2">
+    {{ (currentPage - 1) * pageSize + 1 }}-{{
+      currentPage * pageSize < totalRoles ? currentPage * pageSize : totalRoles
+    }}
+    de {{ totalRoles }}
+    <div class="flex items-center gap-2">
+      <button
+        (click)="prevPage.emit()"
+        [disabled]="currentPage === 1"
+        class="flex items-center">
+        <app-icon
+          icon-start
+          name="chevron-left"
+          size="20"
+          [strokeWidth]="2.5" />
+      </button>
+      <button
+        (click)="nextPage.emit()"
+        [disabled]="currentPage * pageSize >= totalRoles"
+        class="flex items-center">
+        <app-icon
+          icon-start
+          name="chevron-right"
+          size="20"
+          [strokeWidth]="2.5" />
+      </button>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <span>Ir a la página</span>
+    <select
+      class="border rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+      [value]="currentPage"
+      (change)="onPageChange($event)">
+      <option *ngFor="let page of totalPagesArray" [value]="page">
+        {{ page }}
+      </option>
+    </select>
+  </div>
+</div>

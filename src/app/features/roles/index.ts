@@ -1,4 +1,4 @@
-import { RolesRepository } from './models/roles.repository';
+import { RolesRepository } from './models/role/roles.repository';
 import { RolesApiService } from './infrastructure/roles-api.service';
 
 const providerRepository = () => ({
