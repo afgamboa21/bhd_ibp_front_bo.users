@@ -73,6 +73,7 @@
           <app-button
             type="button"
             label="Crear rol"
+            (click)="openModal(true)"
             [size]="'medium'"
             [ngClass]="'mt-auto'"
             [block]="true">
@@ -138,6 +139,6 @@
 @if (showModal()) {
   <div
     class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-    <app-form-role-component [action]="'create'" [roleId]="1" />
+    <app-form-role-component [action]="actionModal()" [roleId]="idRoleSelected()" />
   </div>
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RolesRepository } from '../models/role/roles.repository';
-import { IRole } from '../models/role/roles.model';
+import { IRole, IRoleResponse, PaginatedResponse } from '../models/role/roles.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,7 @@ import { IRole } from '../models/role/roles.model';
 export class RoleUseCaseService {
   constructor(private readonly repository: RolesRepository) {}
 
-  getAllRoles(page: number, size: number): Promise<IRole[]> {
+  getAllRoles(page: number, size: number): Promise<PaginatedResponse<IRoleResponse>> {
     return this.repository.getAllRoles(page, size);
   }
 
@@ -16,7 +16,7 @@ export class RoleUseCaseService {
     return this.repository.searchRoles(query);
   }
 
-  getRoleById(id: number): Promise<IRole> {
+  getRoleById(id: number): Promise<IRoleResponse> {
     return this.repository.getRoleById(id);
   }
 

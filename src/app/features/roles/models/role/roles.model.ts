@@ -2,10 +2,17 @@ import { IPermission } from "../permission/permission.model";
 
 
 export interface IRole {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   permissions?: IPermission[];
+}
+
+export interface IRoleResponse {
+  id: number;
+  name: string;
+  description: string;
+  permissions: number[];
 }
 
 export interface PaginatedResponse<T> {

@@ -9,7 +9,7 @@ import {
 import { RolesApiService } from '../../../infrastructure/roles-api.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { IRole } from '@/app/features/roles/models/role/roles.model';
+import { IRole, IRoleResponse } from '../../../models/role/roles.model';
 import { AuthApiService } from '@/app/features/auth/infrastructure/auth-api.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IconComponent } from '@/app/shared/components/icons/icon.component';
@@ -19,10 +19,12 @@ import { BreadcrumbComponent } from '@/app/shared/components/utils/breadcrumb/br
 import { TableCustomComponent } from '@/app/shared/components/data/table-custom/table-custom.component';
 import { RoleComponent } from '@/app/features/roles/ui/components/role/form-role/FormRole.component';
 import { RoleUseCaseService } from '@/app/features/roles/application/role-use-case.service';
+import { provideRoles } from '@/app/features/roles';
 
 @Component({
   selector: 'app-role-page',
   imports: [CommonModule, ReactiveFormsModule, IconComponent, ButtonComponent, InputTextComponent, InputTextComponent, BreadcrumbComponent, TableCustomComponent, RoleComponent],
+  providers: [provideRoles()],
   templateUrl: './role-page.component.html',
 })
 export class RolePageComponent {
@@ -48,7 +50,9 @@ export class RolePageComponent {
   canAccess = computed(() => this.isAuthenticated());
 
   showModal = signal(false);
-  roles = signal<IRole[]>([]);
+  idRoleSelected = signal<number>(0);
+  actionModal = signal<'create' | 'edit'>('create');
+  roles = signal<IRoleResponse[]>([]);
   isLoading = signal(false);
   hasError = signal(false);
   currentPage = signal(1);
@@ -86,7 +90,9 @@ export class RolePageComponent {
     this.isLoading.set(true);
     this.hasError.set(false);
     this.roleService.getAllRoles(this.currentPage(), this.pageSize()).then((res) => {
-      this.roles.set(res);
+      console.log('res', res)
+      this.roles.set(res.data);
+      this.isLoading.set(false);
     });
 
     /* this.roleService.getAllRoles(this.currentPage(), this.pageSize()).subscribe({
@@ -141,8 +147,9 @@ export class RolePageComponent {
    * * Método para abrir el modal de creación de roles
    * @description Este método se encarga de abrir el modal de creación
    */
-  openModal() {
+  openModal(isCreate: boolean = true) {
     this.showModal.set(true);
+    this.actionModal.set(isCreate ? 'create' : 'edit');
   }
 
   /**
@@ -212,7 +219,8 @@ export class RolePageComponent {
    */
   onEditRole(roleId: number): void {
     console.log('Edit role:', roleId);
-    this.openModal()
+    this.idRoleSelected.set(roleId);
+    this.openModal(false)
   }
 
   /**
