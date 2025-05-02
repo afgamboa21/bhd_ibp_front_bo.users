@@ -18,6 +18,7 @@ import { InputTextComponent } from "@/app/shared/components/forms/input-text.com
 import { BreadcrumbComponent } from '@/app/shared/components/utils/breadcrumb/breadcrumb.component';
 import { TableCustomComponent } from '@/app/shared/components/data/table-custom/table-custom.component';
 import { RoleComponent } from '@/app/features/roles/ui/components/role/form-role/FormRole.component';
+import { RoleUseCaseService } from '@/app/features/roles/application/role-use-case.service';
 
 @Component({
   selector: 'app-role-page',
@@ -26,11 +27,12 @@ import { RoleComponent } from '@/app/features/roles/ui/components/role/form-role
 })
 export class RolePageComponent {
   private readonly authService = inject(AuthApiService);
-  private readonly roleService = inject(RolesApiService);
+  // private readonly roleService = inject(RolesApiService);
+  private readonly roleService = inject(RoleUseCaseService);
 
   itemsRolePage = [
     { label: 'Usuarios banca en línea', routerLink: ['/users'] },
-    { label: 'Administración de roles' } // Último sin routerLink
+    { label: 'Administración de roles' }
   ];
 
   query = signal('');
@@ -59,10 +61,13 @@ export class RolePageComponent {
       const q = this.query();
       if (q) {
         this.isLoading.set(true);
-        this.roleService.searchRoles(q).subscribe({
+        this.roleService.searchRoles(q).then((res) => {
+          this.searchResults.set(res);
+        })
+        /* this.roleService.searchRoles(q).subscribe({
           next: (results) => this.searchResults.set(results),
           complete: () => this.isLoading.set(false),
-        });
+        }); */
       } else {
         this.searchResults.set([]);
       }
@@ -80,8 +85,11 @@ export class RolePageComponent {
   fetchRoles() {
     this.isLoading.set(true);
     this.hasError.set(false);
+    this.roleService.getAllRoles(this.currentPage(), this.pageSize()).then((res) => {
+      this.roles.set(res);
+    });
 
-    this.roleService.getRoles(this.currentPage(), this.pageSize()).subscribe({
+    /* this.roleService.getAllRoles(this.currentPage(), this.pageSize()).subscribe({
       next: (res) => {
         this.roles.set(res.data);
         this.totalRoles.set(res.total);
@@ -91,7 +99,7 @@ export class RolePageComponent {
         this.hasError.set(true);
         this.isLoading.set(false);
       },
-    });
+    }); */
   }
 
   /**

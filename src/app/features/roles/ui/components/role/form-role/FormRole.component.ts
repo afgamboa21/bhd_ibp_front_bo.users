@@ -36,6 +36,7 @@ export class RoleComponent implements OnInit {
   private readonly FormRoleBuilder = inject(FormBuilder);
   private readonly permissionService = inject(PermissionUseCaseService);
   private readonly roleService = inject(RoleUseCaseService);
+
   action = input.required<string>();
   isEditMode = signal(false);
   hasError = signal(false);

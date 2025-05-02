@@ -8,8 +8,12 @@ import { IRole } from '../models/role/roles.model';
 export class RoleUseCaseService {
   constructor(private readonly repository: RolesRepository) {}
 
-  getAllRoles(): Promise<IRole[]> {
-    return this.repository.getAllRoles();
+  getAllRoles(page: number, size: number): Promise<IRole[]> {
+    return this.repository.getAllRoles(page, size);
+  }
+
+  searchRoles(query: string): Promise<IRole[]> {
+    return this.repository.searchRoles(query);
   }
 
   getRoleById(id: number): Promise<IRole> {

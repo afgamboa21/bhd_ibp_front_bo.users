@@ -16,7 +16,7 @@ export class RolesApiService {
 
   // Add API service methods here
   // TODO implementar servicio desde el bk
-  getRoles(page: number, size: number) {
+  getAllRoles(page: number, size: number) {
     const mockData: IRole[] = [
       {
         id: 1,
