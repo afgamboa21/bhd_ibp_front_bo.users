@@ -45,12 +45,6 @@ export class RolesApiService {
 
     return Promise.resolve(paginated);
 
-    /* return of(paginated).pipe(
-      catchError((error) => {
-        console.error('Error al consultar roles', error);
-        throw error;
-      }),
-    ); */
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

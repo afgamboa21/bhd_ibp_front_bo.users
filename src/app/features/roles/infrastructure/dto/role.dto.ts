@@ -6,13 +6,7 @@ export const RoleResponseDtoSchema = z.object({
   description: z.string().nullable(),
   permissions: z.array(
     z.object({
-      parentKey: z.string(),
-      permissions: z.array(
-        z.object({
-          id: z.number(),
-          name: z.string(),
-        }),
-      ),
+      permissions: z.array(z.number()),
     }),
   ),
 });
@@ -20,13 +14,6 @@ export const RoleResponseDtoSchema = z.object({
 export type RoleResponseDto = z.infer<typeof RoleResponseDtoSchema> & {
   id: string;
   name: string;
-  permissions: [
-    {
-      parentKey: string;
-      permissions: {
-        id: number;
-        name: string;
-      }[];
-    },
-  ];
+  description: string;
+  permissions: number[];
 };
