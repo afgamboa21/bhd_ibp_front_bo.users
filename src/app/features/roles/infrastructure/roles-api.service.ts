@@ -8,134 +8,113 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
-export class RolesApiService extends RolesRepository {
-  override async getAllRoles(): Promise<IRole[]> {
-    try {
-      const response = await this.http
-        .get<IRole[]>('https://jsonplaceholder.typicode.com/users')
-        .toPromise();
-      return response || [];
-    } catch (error) {
-      console.error('Error fetching roles:', error);
-      throw error;
-    }
+export class RolesApiService {
+  constructor(private http: HttpClient) {
+    // super();
   }
-  override getRoleById(id: number): Promise<IRole> {
-    throw new Error('Method not implemented.');
-  }
-  override createRole(role: IRole): Promise<IRole> {
-    throw new Error('Method not implemented.');
-  }
-  override updateRole(id: number, role: IRole): Promise<IRole> {
-    throw new Error('Method not implemented.');
-  }
-  constructor(private httpSvc: HttpService) {
-    super();
-  }
-
-  private http = inject(HttpClient);
+  private readonly baseUrl = 'http://localhost:3000/roles';
 
   // Add API service methods here
   // TODO implementar servicio desde el bk
   getRoles(page: number, size: number) {
     const mockData: IRole[] = [
       {
-        id: 8125,
+        id: 1,
         name: 'Administrador',
         description: 'Acceso total',
       },
       {
-        id: 8125,
+        id: 2,
         name: 'Usuario',
         description: 'Acceso limitado',
       },
       {
-        id: 8125,
+        id: 3,
         name: 'Supervisor',
         description: 'Supervisión de usuarios',
       },
       {
-        id: 8125,
+        id: 4,
         name: 'Auditor',
         description: 'Acceso a auditorías',
       },
       {
-        id: 8125,
+        id: 5,
         name: 'Gerente',
         description: 'Gestión de operaciones',
       },
       {
-        id: 8125,
+        id: 6,
         name: 'Analista',
         description: 'Análisis de datos',
       },
       {
-        id: 8125,
+        id: 7,
         name: 'Soporte',
         description: 'Soporte técnico',
       },
       {
-        id: 8125,
+        id: 8,
         name: 'Consultor',
         description: 'Consultoría externa',
       },
       {
-        id: 8125,
+        id: 9,
         name: 'Desarrollador',
         description: 'Desarrollo de software',
       },
       {
-        id: 8125,
+        id: 10,
         name: 'Tester',
         description: 'Pruebas de calidad',
       },
       {
-        id: 8125,
+        id: 11,
         name: 'Operador',
         description: 'Operaciones diarias',
       },
       {
-        id: 8125,
+        id: 12,
         name: 'Especialista',
         description: 'Especialización técnica',
       },
       {
-        id: 8125,
+        id: 13,
         name: 'Coordinador',
         description: 'Coordinación de equipos',
       },
       {
-        id: 8125,
+        id: 14,
         name: 'Director',
         description: 'Dirección estratégica',
       },
       {
-        id: 8125,
+        id: 15,
         name: 'Asistente',
         description: 'Asistencia administrativa',
       },
       {
-        id: 8125,
+        id: 16,
         name: 'Capacitador',
         description: 'Capacitación de personal',
       },
       {
-        id: 8125,
+        id: 17,
         name: 'Investigador',
         description: 'Investigación y desarrollo',
       },
       {
-        id: 8125,
+        id: 18,
         name: 'Planificador',
         description: 'Planificación de proyectos',
       },
       {
-        id: 8125,
+        id: 19,
         name: 'Administrador de red',
         description: 'Gestión de redes',
       },
       {
-        id: 8125,
+        id: 20,
         name: 'Arquitecto',
         description: 'Diseño de sistemas',
       },
@@ -162,5 +141,25 @@ export class RolesApiService extends RolesRepository {
     return this.http.get<any[]>(
       `https://jsonplaceholder.typicode.com/users?name_like=${query}`,
     );
+  }
+
+  createRole(role: IRole) {
+    localStorage.setItem('newRole', JSON.stringify(role));
+    return this.http.post<IRole>(`${this.baseUrl}/create`, role);
+  }
+
+  updateRole(role: IRole) {
+    return this.http.put<IRole>(`${this.baseUrl}/update/${role.id}`, role);
+  }
+
+  getRoleById(id: number): Promise<IRole> {
+    // return this.http.get<IRole>(`${this.baseUrl}/${id}`);
+    const mockData: IRole = {
+      id: 1,
+      name: 'Administrador',
+      description: 'Acceso total',
+      // permissions: [1, 2],
+    };
+    return Promise.resolve(mockData);
   }
 }
