@@ -17,10 +17,11 @@ import { ButtonComponent } from '@/app/shared/components/forms/button.component'
 import { InputTextComponent } from "@/app/shared/components/forms/input-text.component";
 import { BreadcrumbComponent } from '@/app/shared/components/utils/breadcrumb/breadcrumb.component';
 import { TableCustomComponent } from '@/app/shared/components/data/table-custom/table-custom.component';
+import { RoleComponent } from '@/app/features/roles/ui/components/role/form-role/FormRole.component';
 
 @Component({
   selector: 'app-role-page',
-  imports: [CommonModule, ReactiveFormsModule, IconComponent, ButtonComponent, InputTextComponent, InputTextComponent, BreadcrumbComponent, TableCustomComponent],
+  imports: [CommonModule, ReactiveFormsModule, IconComponent, ButtonComponent, InputTextComponent, InputTextComponent, BreadcrumbComponent, TableCustomComponent, RoleComponent],
   templateUrl: './role-page.component.html',
 })
 export class RolePageComponent {

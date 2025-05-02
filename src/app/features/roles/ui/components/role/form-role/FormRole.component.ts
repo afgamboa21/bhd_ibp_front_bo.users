@@ -101,7 +101,7 @@ export class RoleComponent implements OnInit {
 
           console.log(validPermissionIds);
 
-        role.permissions.forEach((permId) => {
+        role.permissions?.forEach((permId) => {
           permissionsArray.push(this.FormRoleBuilder.control(permId));
         });
       });
