@@ -9,7 +9,7 @@ import {
 import { RolesApiService } from '../../../infrastructure/roles-api.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { Role } from '../../../models/role/roles.model';
+import { IRole, IRoleResponse } from '../../../models/role/roles.model';
 import { AuthApiService } from '@/app/features/auth/infrastructure/auth-api.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RoleComponent } from '../../components/role/form-role/FormRole.component';
@@ -36,7 +36,7 @@ export class RolePageComponent {
   canAccess = computed(() => this.isAuthenticated());
 
   showModal = signal(false);
-  roles = signal<Role[]>([]);
+  roles = signal<IRoleResponse[]>([]);
   isLoading = signal(false);
   hasError = signal(false);
   currentPage = signal(1);

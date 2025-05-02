@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RolesRepository } from '../models/role/roles.repository';
-import { IRole } from '../models/role/roles.model';
+import { IRole, IRoleResponse } from '../models/role/roles.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class RoleUseCaseService {
     return this.repository.getAllRoles();
   }
 
-  getRoleById(id: number): Promise<IRole> {
+  getRoleById(id: number): Promise<IRoleResponse> {
     return this.repository.getRoleById(id);
   }
 

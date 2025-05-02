@@ -41,14 +41,14 @@
                 </app-dinamy-toggle-or-check-box>
               </div>
             </div>
-            @for (permission of permissionsChild(); track permission.id) {
+            @for (module of permission.moduleResponse; track module.id) {
               <div class="flex items-center space-x-2 py-1">
                 <app-dinamy-toggle-or-check-box
                   type="checkbox"
-                  [label]="permission.name"
+                  [label]="module.name"
                   [formGroup]="myRoleForm"
-                  [checked]="isPermissionSelected(permission)"
-                  (change)="handlePermissionToggle(permission, $event)">
+                  [checked]="isPermissionSelected(module)"
+                  (change)="handlePermissionToggle(module, $event)">
                 </app-dinamy-toggle-or-check-box>
               </div>
             }

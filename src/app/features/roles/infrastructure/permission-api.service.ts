@@ -12,6 +12,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { SchemaValidator } from '@/app/core/services/infrastructure/schema-validator';
 import { permissionDtoMapper } from './mappers/permission.dto.mapper';
+import { empty } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +22,10 @@ export class PermissionService extends PermissionRepository {
     super();
   }
 
-  private apiUrl = 'http://localhost:3000/permissions';
+  private apiUrl = 'http://localhost:5000/api/sections/all';
 
   async getAllPermissions(): Promise<IPermission[]> {
+
     const permisosMock: IPermission[] = [
       {
         id: 1,
@@ -44,8 +46,7 @@ export class PermissionService extends PermissionRepository {
         ],
       },
     ];
-    // const dto = await this.http.get<PermissionResponseDto>(this.apiUrl);
-    const dto = permisosMock;
+    const dto = await this.http.post<PermissionResponseDto>(this.apiUrl, "").toPromise();
     SchemaValidator.validate(PermissionResponseDtoSchema, dto);
 
     return permissionDtoMapper(dto);

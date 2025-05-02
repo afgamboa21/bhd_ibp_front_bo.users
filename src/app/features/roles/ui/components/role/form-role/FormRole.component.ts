@@ -42,7 +42,6 @@ export class RoleComponent implements OnInit {
   isLoading = signal(false);
   roleId = input<number>();
   permissions = signal<IPermission[] | []>([]);
-  permissionsChild = signal<IPermissionChild[] | []>([]);
   selectedPermissionsIds = signal<number[]>([]);
 
   permissionMethods!: Permission;
@@ -75,9 +74,6 @@ export class RoleComponent implements OnInit {
   getAllPermissions(): void {
     this.permissionService.getAllPermissions().then((permissions) => {
       this.permissions.set(permissions);
-      this.permissionsChild.set(
-        permissions.flatMap((permission) => permission.moduleResponse),
-      );
     });
   }
 
@@ -86,7 +82,6 @@ export class RoleComponent implements OnInit {
       this.getAllPermissions();
     } else if (this.action() === 'edit' && this.roleId()) {
       this.getAllPermissions();
-      // this.permissionsChild.set([]);
       this.roleService.getRoleById(this.roleId()!).then((role) => {
         if (!role) throw new Error('Role not found');
 
@@ -99,7 +94,7 @@ export class RoleComponent implements OnInit {
           .flatMap((p) => p.moduleResponse)
           .map((child) => child.id);
 
-          console.log(validPermissionIds);
+        console.log(validPermissionIds);
 
         role.permissions.forEach((permId) => {
           permissionsArray.push(this.FormRoleBuilder.control(permId));
